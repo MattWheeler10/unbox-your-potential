@@ -1,97 +1,94 @@
-<script setup>
-import Navigation from './components/Navigation.vue'
-import Hero from './components/Hero.vue'
-import Services from './components/Services.vue'
-import About from './components/About.vue'
-import CTA from './components/CTA.vue'
-import Footer from './components/Footer.vue'
-</script>
-
 <template>
-  <Navigation />
-  <Hero />
-  <Services />
-  <About />
-  <CTA />
-  <Footer />
+  <!-- Full-page mouse fx overlay — fixed, pointer-events none, behind all content -->
+  <div class="page-fx" ref="fxRef"></div>
+  <AppHeader />
+  <main>
+    <AppAbout />
+    <AppWhatsOn />
+    <AppPricing />
+    <AppContact />
+  </main>
 </template>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import AppHeader from './components/AppHeader.vue'
+import AppAbout from './components/AppAbout.vue'
+import AppPricing from './components/AppPricing.vue'
+import AppWhatsOn from './components/AppWhatsOn.vue'
+import AppContact from './components/AppContact.vue'
+
+const fxRef = ref(null)
+let rafId = null
+
+function onMouseMove(e) {
+  if (rafId) cancelAnimationFrame(rafId)
+  rafId = requestAnimationFrame(() => {
+    if (!fxRef.value) return
+    fxRef.value.style.setProperty('--mouse-x', `${e.clientX}px`)
+    fxRef.value.style.setProperty('--mouse-y', `${e.clientY}px`)
+  })
 }
 
-html {
-  scroll-behavior: smooth;
+function onMouseLeave() {
+  if (rafId) cancelAnimationFrame(rafId)
+  fxRef.value?.style.setProperty('--mouse-x', '-9999px')
+  fxRef.value?.style.setProperty('--mouse-y', '-9999px')
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  color: #333;
+onMounted(() => {
+  window.addEventListener('mousemove', onMouseMove, { passive: true })
+  document.documentElement.addEventListener('mouseleave', onMouseLeave)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('mousemove', onMouseMove)
+  document.documentElement.removeEventListener('mouseleave', onMouseLeave)
+  if (rafId) cancelAnimationFrame(rafId)
+})
+</script>
+
+<style scoped>
+.page-fx {
+  --mouse-x: -9999px;
+  --mouse-y: -9999px;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+/* Red glow follows cursor */
+.page-fx::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle 520px at var(--mouse-x) var(--mouse-y),
+    rgba(192, 57, 43, 0.18) 0%,
+    rgba(192, 57, 43, 0.06) 40%,
+    transparent 70%
+  );
 }
 
-.btn {
-  display: inline-block;
-  padding: 12px 30px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.btn-primary {
-  background-color: #ff6b35;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #e55a24;
-  transform: translateY(-2px);
-}
-
-.btn-secondary {
-  background-color: white;
-  color: #ff6b35;
-  border: 2px solid #ff6b35;
-}
-
-.btn-secondary:hover {
-  background-color: #ff6b35;
-  color: white;
-}
-
-section {
-  padding: 80px 0;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-h2 {
-  font-size: 42px;
-  color: #1a1a1a;
-}
-
-h3 {
-  font-size: 28px;
-}
-
-p {
-  margin-bottom: 15px;
-  line-height: 1.8;
+/* Grid revealed around cursor */
+.page-fx::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(
+    circle 260px at var(--mouse-x) var(--mouse-y),
+    black 0%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle 260px at var(--mouse-x) var(--mouse-y),
+    black 0%,
+    transparent 100%
+  );
 }
 </style>
