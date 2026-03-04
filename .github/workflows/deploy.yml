@@ -25,19 +25,17 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
-          cache-dependency-path: unbox-your-potential/pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install
-        working-directory: unbox-your-potential
 
       - name: Build
         run: pnpm build
-        working-directory: unbox-your-potential
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: unbox-your-potential/dist
+          path: dist
 
       - uses: actions/deploy-pages@v4
         id: deployment
