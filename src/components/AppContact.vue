@@ -36,9 +36,6 @@
         <span class="contact-cta__handle">@zacbox_pt</span>
       </a>
 
-      <!-- Decorative corner brackets -->
-      <div class="contact-deco contact-deco--tl" aria-hidden="true"></div>
-      <div class="contact-deco contact-deco--br" aria-hidden="true"></div>
 
     </div>
   </section>
@@ -166,29 +163,7 @@
   border-left: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* =============================================
-   DECORATIONS
-============================================= */
-.contact-deco {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  pointer-events: none;
-}
 
-.contact-deco--tl {
-  top: 3rem;
-  right: 3rem;
-  border-top: 2px solid rgba(192, 57, 43, 0.25);
-  border-right: 2px solid rgba(192, 57, 43, 0.25);
-}
-
-.contact-deco--br {
-  bottom: 3rem;
-  left: 3rem;
-  border-bottom: 2px solid rgba(192, 57, 43, 0.25);
-  border-left: 2px solid rgba(192, 57, 43, 0.25);
-}
 
 /* =============================================
    RESPONSIVE
@@ -201,11 +176,6 @@
   .contact-cta {
     width: 100%;
     justify-content: center;
-  }
-
-  .contact-deco {
-    width: 36px;
-    height: 36px;
   }
 }
 </style>
