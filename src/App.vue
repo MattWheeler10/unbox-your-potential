@@ -1,22 +1,22 @@
 <template>
   <!-- Full-page mouse fx overlay — fixed, pointer-events none, behind all content -->
   <div class="page-fx" ref="fxRef"></div>
-  <AppHeader />
+  <Header />
   <main>
-    <AppAbout />
-    <AppWhatsOn />
-    <AppPricing />
-    <AppContact />
+    <About />
+    <WhatsOn />
+    <Pricing />
+    <Contact />
   </main>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import AppHeader from './components/AppHeader.vue'
-import AppAbout from './components/AppAbout.vue'
-import AppPricing from './components/AppPricing.vue'
-import AppWhatsOn from './components/AppWhatsOn.vue'
-import AppContact from './components/AppContact.vue'
+import Header from './components/Header.vue'
+import About from './components/About.vue'
+import Pricing from './components/Pricing.vue'
+import WhatsOn from './components/WhatsOn.vue'
+import Contact from './components/Contact.vue'
 
 const fxRef = ref(null)
 let rafId = null
