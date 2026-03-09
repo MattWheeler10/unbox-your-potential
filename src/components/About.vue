@@ -29,10 +29,28 @@
           <h2 class="about-heading">Meet <span>Zac</span></h2>
 
           <p class="about-body">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            I'm a dedicated personal trainer committed to helping driven individuals build stronger bodies, stronger minds and lasting confidence. Fitness changed my life and now I help others experience that same transformation.
           </p>
           <p class="about-body">
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            I don't believe in quick fixes, crash diets or generic workout plans. I believe in structured training, smart nutrition, accountability and building habits that last. Whether your goal is to lose weight, build muscle, improve athletic performance or simply feel better in your own skin — I create customised programmes designed around you, your body, your lifestyle and your goals.
+          </p>
+          <p class="about-body">
+            My coaching style is supportive but result-driven. I'll push you when you need it, educate you along the way, and make sure you understand not just what to do but why you're doing it — because real progress happens when you build knowledge and discipline alongside strength.
+          </p>
+
+          <div class="about-expect">
+            <p class="about-expect__label">What you can expect</p>
+            <ul class="about-expect__list">
+              <li>Personalised training programmes</li>
+              <li>Sustainable nutrition guidance</li>
+              <li>Accountability and progress tracking</li>
+              <li>Proper form and injury prevention focus</li>
+              <li>A mindset built for long-term success</li>
+            </ul>
+          </div>
+
+          <p class="about-body about-body--closing">
+            This isn't about workouts. It's about building a stronger version of yourself physically and mentally. If you're ready to commit to real change, I'm ready to help you get there.
           </p>
 
           <!-- Certifications -->
@@ -295,6 +313,61 @@ onUnmounted(() => {
 }
 
 /* =============================================
+   EXPECT LIST
+============================================= */
+.about-expect {
+  margin: 1.5rem 0 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border-left: 2px solid var(--color-red);
+  background: rgba(192, 57, 43, 0.04);
+}
+
+.about-expect__label {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--color-red);
+  margin-bottom: 0.85rem;
+}
+
+.about-expect__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.about-expect__list li {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.about-expect__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 4px;
+  height: 4px;
+  background: var(--color-red);
+  border-radius: 50%;
+}
+
+.about-body--closing {
+  margin-top: 0.5rem;
+  font-style: italic;
+  color: var(--color-text);
+  opacity: 0.75;
+}
+
+/* =============================================
    CERTIFICATIONS
 ============================================= */
 .certs {
@@ -334,7 +407,12 @@ onUnmounted(() => {
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cert-card:hover .cert-card__inner,
+@media (hover: hover) {
+  .cert-card:hover .cert-card__inner {
+    transform: rotateY(180deg);
+  }
+}
+
 .cert-card--flipped .cert-card__inner {
   transform: rotateY(180deg);
 }
@@ -358,8 +436,10 @@ onUnmounted(() => {
   transition: border-color 0.25s ease;
 }
 
-.cert-card:hover .cert-card__front {
-  border-color: rgba(192, 57, 43, 0.3);
+@media (hover: hover) {
+  .cert-card:hover .cert-card__front {
+    border-color: rgba(192, 57, 43, 0.3);
+  }
 }
 
 .cert-card__icon {
