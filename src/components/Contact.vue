@@ -14,27 +14,43 @@
       </h2>
 
       <p class="contact-body">
-        The first step is the hardest — but it starts with a message.
+        The first step is the hardest - but it starts with a message.
         Drop Zac a DM on Instagram and he'll get back to you to discuss your goals,
         answer any questions, and get you started on your journey.
       </p>
 
-      <!-- Instagram CTA -->
-      <a
-        href="https://www.instagram.com/zacbox_pt/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="contact-cta"
-        aria-label="Message Zac on Instagram"
-      >
-        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
-        </svg>
-        <span>DM on Instagram</span>
-        <span class="contact-cta__handle">@zacbox_pt</span>
-      </a>
+      <div class="contact-ctas">
+        <!-- Instagram CTA -->
+        <a
+          href="https://www.instagram.com/zacbox_pt/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contact-cta"
+          aria-label="Message Zac on Instagram"
+        >
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+          </svg>
+          <span>DM on Instagram</span>
+          <span class="contact-cta__handle">@zacbox_pt</span>
+        </a>
+
+        <!-- Email CTA -->
+        <a
+          href="mailto:zac@placeholder.com"
+          class="contact-cta contact-cta--outline"
+          aria-label="Email Zac"
+        >
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <polyline points="2,4 12,13 22,4"/>
+          </svg>
+          <span>Email Zac</span>
+          <span class="contact-cta__handle">zac@placeholder.com</span>
+        </a>
+      </div>
 
 
     </div>
@@ -125,8 +141,14 @@
 }
 
 /* =============================================
-   CTA BUTTON
+   CTA BUTTONS
 ============================================= */
+.contact-ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .contact-cta {
   display: inline-flex;
   align-items: center;
@@ -155,6 +177,19 @@
   box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3);
 }
 
+.contact-cta--outline {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.contact-cta--outline:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--color-text);
+  box-shadow: none;
+}
+
 .contact-cta__handle {
   font-weight: 300;
   opacity: 0.8;
@@ -171,6 +206,10 @@
 @media (max-width: 480px) {
   .contact {
     padding: 5rem 0;
+  }
+
+  .contact-ctas {
+    flex-direction: column;
   }
 
   .contact-cta {

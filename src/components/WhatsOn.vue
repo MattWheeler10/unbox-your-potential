@@ -15,43 +15,40 @@
       <!-- Class cards -->
       <div class="class-grid">
 
-        <!-- Card 1 -->
+        <!-- Card 1: HIT Class -->
         <div class="class-card">
-          <div class="class-card__day">Mon</div>
+          <div class="class-card__day">
+            <span class="class-card__every">every</span>
+            Thu
+          </div>
           <div class="class-card__body">
-            <span class="class-card__name">Class Name</span>
+            <span class="class-card__name">Strength & Conditioning</span>
             <span class="class-card__time">
               <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              00:00 AM
+              5:30 PM · Studio 2
             </span>
           </div>
           <span class="class-card__badge">Free</span>
         </div>
 
-        <!-- Card 2 -->
-        <div class="class-card">
-          <div class="class-card__day">Wed</div>
+        <!-- Card 2: Coming Soon -->
+        <div class="class-card class-card--soon">
+          <div class="class-card__day class-card__day--muted">—</div>
           <div class="class-card__body">
-            <span class="class-card__name">Class Name</span>
-            <span class="class-card__time">
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              00:00 PM
-            </span>
+            <span class="class-card__name class-card__name--muted">Coming Soon</span>
+            <span class="class-card__time">More classes being added</span>
           </div>
-          <span class="class-card__badge">Free</span>
+          <span class="class-card__badge class-card__badge--soon">Soon</span>
         </div>
 
-        <!-- Card 3 -->
-        <div class="class-card">
-          <div class="class-card__day">Sat</div>
+        <!-- Card 3: Coming Soon -->
+        <div class="class-card class-card--soon">
+          <div class="class-card__day class-card__day--muted">—</div>
           <div class="class-card__body">
-            <span class="class-card__name">Class Name</span>
-            <span class="class-card__time">
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              00:00 AM
-            </span>
+            <span class="class-card__name class-card__name--muted">Coming Soon</span>
+            <span class="class-card__time">More classes being added</span>
           </div>
-          <span class="class-card__badge">Free</span>
+          <span class="class-card__badge class-card__badge--soon">Soon</span>
         </div>
 
       </div>
@@ -160,18 +157,21 @@
   color: var(--color-red);
   letter-spacing: 0.02em;
   flex-shrink: 0;
-  width: 3.5ch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  padding-right: 1.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* Divider between day and body */
-.class-card::before {
-  content: '';
-  position: absolute;
-  left: calc(2rem + 3.5ch + 0.75rem);
-  top: 1.5rem;
-  bottom: 1.5rem;
-  width: 1px;
-  background: rgba(255, 255, 255, 0.07);
+.class-card__every {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-text-muted);
 }
 
 .class-card__body {
@@ -204,6 +204,27 @@
 
 .class-card__time svg {
   flex-shrink: 0;
+}
+
+/* Coming soon card */
+.class-card--soon {
+  opacity: 0.45;
+  pointer-events: none;
+  border-style: dashed;
+}
+
+.class-card__day--muted {
+  color: var(--color-text-muted);
+  font-size: 2rem;
+}
+
+.class-card__name--muted {
+  color: var(--color-text-muted);
+}
+
+.class-card__badge--soon {
+  color: var(--color-text-muted);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 /* Free badge */
