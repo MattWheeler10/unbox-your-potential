@@ -146,7 +146,7 @@
             For those looking for a truly bespoke experience — tailored sessions, lifestyle coaching and hands-on guidance training with Zac directly. Pricing is discussed on an individual basis.
           </p>
           <div class="inperson__ctas">
-            <a href="mailto:zac@placeholder.com" class="inperson__cta inperson__cta--primary">
+            <a href="mailto:zacboxpt@gmail.com" class="inperson__cta inperson__cta--primary">
               <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
               Email Zac
             </a>

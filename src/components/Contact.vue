@@ -39,7 +39,7 @@
 
         <!-- Email CTA -->
         <a
-          href="mailto:zac@placeholder.com"
+          href="mailto:zacboxpt@gmail.com"
           class="contact-cta contact-cta--outline"
           aria-label="Email Zac"
         >
@@ -48,7 +48,7 @@
             <polyline points="2,4 12,13 22,4"/>
           </svg>
           <span>Email Zac</span>
-          <span class="contact-cta__handle">zac@placeholder.com</span>
+          <span class="contact-cta__handle">zacboxpt@gmail.com</span>
         </a>
       </div>
 
