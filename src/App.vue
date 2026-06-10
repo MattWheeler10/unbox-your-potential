@@ -8,6 +8,9 @@
     <Pricing />
     <Contact />
   </main>
+  <SiteFooter @open-legal="legalPage = $event" />
+  <LegalModal :page="legalPage" @close="legalPage = null" />
+  <CookieBanner />
 </template>
 
 <script setup>
@@ -17,6 +20,11 @@ import About from './components/About.vue'
 import Pricing from './components/Pricing.vue'
 import WhatsOn from './components/WhatsOn.vue'
 import Contact from './components/Contact.vue'
+import SiteFooter from './components/SiteFooter.vue'
+import LegalModal from './components/LegalModal.vue'
+import CookieBanner from './components/CookieBanner.vue'
+
+const legalPage = ref(null)
 
 const fxRef = ref(null)
 let rafId = null
@@ -36,14 +44,20 @@ function onMouseLeave() {
   fxRef.value?.style.setProperty('--mouse-y', '-9999px')
 }
 
+function onKeydown(e) {
+  if (e.key === 'Escape') legalPage.value = null
+}
+
 onMounted(() => {
   window.addEventListener('mousemove', onMouseMove, { passive: true })
   document.documentElement.addEventListener('mouseleave', onMouseLeave)
+  window.addEventListener('keydown', onKeydown)
 })
 
 onUnmounted(() => {
   window.removeEventListener('mousemove', onMouseMove)
   document.documentElement.removeEventListener('mouseleave', onMouseLeave)
+  window.removeEventListener('keydown', onKeydown)
   if (rafId) cancelAnimationFrame(rafId)
 })
 </script>
