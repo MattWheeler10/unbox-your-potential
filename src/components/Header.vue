@@ -10,13 +10,18 @@
         </a>
 
         <ul class="nav-links" :class="{ 'nav-links--open': menuOpen }">
-          <li><a href="#" class="nav-link" @click="closeMenu">Home</a></li>
-          <li><a href="#about" class="nav-link" @click="closeMenu">About</a></li>
-          <li><a href="#whats-on" class="nav-link" @click="closeMenu">What's On</a></li>
-          <li><a href="#reviews" class="nav-link" @click="closeMenu">Reviews</a></li>
-          <li><a href="#pricing" class="nav-link" @click="closeMenu">Pricing</a></li>
-          <li><a href="#contact" class="nav-link" @click="closeMenu">Contact</a></li>
+          <li v-for="link in links" :key="link.id">
+            <a
+              :href="link.id ? `#${link.id}` : '#'"
+              class="nav-link"
+              :class="{ 'nav-link--active': activeId === link.id }"
+              :aria-current="activeId === link.id ? 'true' : null"
+              @click="closeMenu"
+            >{{ link.label }}</a>
+          </li>
         </ul>
+
+        <a href="#pricing" class="nav-cta" @click="closeMenu">Book Now</a>
 
         <button
           class="nav-toggle"
@@ -34,6 +39,10 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero">
+
+      <!-- Ambient glow + grain texture -->
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-grain" aria-hidden="true"></div>
 
       <!-- Subtle corner bracket decorations -->
       <div class="hero-deco hero-deco--tl" aria-hidden="true"></div>
@@ -80,6 +89,7 @@
         </a>
 
       </div>
+
     </section>
 
   </header>
@@ -95,12 +105,45 @@ function closeMenu() {
   menuOpen.value = false
 }
 
+const links = [
+  { id: '', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'whats-on', label: "What's On" },
+  { id: 'reviews', label: 'Reviews' },
+  { id: 'pricing', label: 'Pricing' },
+  { id: 'contact', label: 'Contact' },
+]
+
+// Highlights the nav link for whichever section sits in the middle of the viewport
+const activeId = ref('')
+let sectionObserver = null
+
 function onScroll() {
   scrolled.value = window.scrollY > 20
+  if (window.scrollY < 200) activeId.value = ''
 }
 
-onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
-onUnmounted(() => window.removeEventListener('scroll', onScroll))
+onMounted(() => {
+  window.addEventListener('scroll', onScroll, { passive: true })
+  if (!('IntersectionObserver' in window)) return
+  sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) activeId.value = entry.target.id
+      })
+    },
+    { rootMargin: '-45% 0px -50% 0px' }
+  )
+  links.forEach(({ id }) => {
+    const el = id && document.getElementById(id)
+    if (el) sectionObserver.observe(el)
+  })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+  sectionObserver?.disconnect()
+})
 </script>
 
 <style scoped>
@@ -151,6 +194,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
 /* Nav links */
 .nav-links {
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 2.5rem;
@@ -185,8 +229,37 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   color: var(--color-text);
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link--active::after {
   width: 100%;
+}
+
+.nav-link--active {
+  color: var(--color-text);
+}
+
+/* Nav CTA */
+.nav-cta {
+  margin-left: 2.5rem;
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--color-red);
+  border: 1px solid var(--color-red);
+  padding: 0.6rem 1.15rem;
+  border-radius: 2px;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
+}
+
+.nav-cta:hover {
+  background: var(--color-red-hover);
+  border-color: var(--color-red-hover);
+  box-shadow: 0 8px 24px rgba(192, 57, 43, 0.35);
 }
 
 /* Hamburger button */
@@ -223,6 +296,18 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 @media (max-width: 768px) {
   .nav-toggle {
     display: flex;
+  }
+
+  .nav-cta {
+    margin-left: auto;
+    margin-right: 1rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.68rem;
+  }
+
+  .nav-link--active {
+    background: rgba(192, 57, 43, 0.06);
+    box-shadow: inset 2px 0 0 var(--color-red);
   }
 
   .nav-links {
@@ -418,6 +503,48 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   border-right: 2px solid rgba(192, 57, 43, 0.35);
 }
 
+/* Ambient red glow behind the title */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 48%, rgba(192, 57, 43, 0.16) 0%, transparent 70%),
+    radial-gradient(ellipse 90% 60% at 50% 110%, rgba(192, 57, 43, 0.08) 0%, transparent 70%);
+}
+
+/* Fine film grain for texture */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Staggered entrance — animates `translate` (not `transform`) so the
+   CTA's hover lift still works once the animation has finished */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.hero-inner > * {
+  animation: hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-inner > :nth-child(1) { animation-delay: 0.05s; }
+.hero-inner > :nth-child(2) { animation-delay: 0.15s; }
+.hero-inner > :nth-child(3) { animation-delay: 0.3s; }
+.hero-inner > :nth-child(4) { animation-delay: 0.4s; }
+.hero-inner > :nth-child(5) { animation-delay: 0.5s; }
+
 @media (max-width: 480px) {
   .hero-deco {
     width: 36px;
@@ -432,6 +559,12 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   .hero-deco--br {
     bottom: 1.5rem;
     right: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .nav-cta {
+    display: none;
   }
 }
 </style>
