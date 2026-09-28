@@ -3,23 +3,23 @@
     <div class="container contact-inner">
 
       <!-- Section label -->
-      <div class="section-tag">
+      <div class="section-tag" v-reveal>
         <div class="section-tag__bar"></div>
         <span class="section-tag__label">Contact</span>
       </div>
 
       <!-- Headline -->
-      <h2 class="contact-heading">
+      <h2 class="contact-heading" v-reveal="80">
         Ready To Unbox<br><span>Your Potential?</span>
       </h2>
 
-      <p class="contact-body">
+      <p class="contact-body" v-reveal="160">
         The first step is the hardest - but it starts with a message.
         Drop Zac a DM on Instagram and he'll get back to you to discuss your goals,
         answer any questions, and get you started on your journey.
       </p>
 
-      <div class="contact-ctas">
+      <div class="contact-ctas" v-reveal="240">
         <!-- Instagram CTA -->
         <a
           href="https://www.instagram.com/zacbox_pt/"
@@ -212,9 +212,23 @@
     flex-direction: column;
   }
 
+  /* Label on one line, handle/email on its own line beneath */
   .contact-cta {
     width: 100%;
+    flex-wrap: wrap;
     justify-content: center;
+    row-gap: 0.4rem;
+    white-space: nowrap;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .contact-cta__handle {
+    flex-basis: 100%;
+    text-align: center;
+    padding-left: 0;
+    border-left: none;
+    text-transform: none;
+    letter-spacing: 0.06em;
   }
 }
 </style>

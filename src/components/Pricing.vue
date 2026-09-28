@@ -3,17 +3,17 @@
     <div class="container">
 
       <!-- Section label -->
-      <div class="section-tag">
+      <div class="section-tag" v-reveal>
         <div class="section-tag__bar"></div>
         <span class="section-tag__label">Pricing</span>
       </div>
 
       <!-- Heading -->
-      <h2 class="pricing-heading">Invest In <span>Yourself</span></h2>
-      <p class="pricing-sub">Online coaching or in person with Zac</p>
+      <h2 class="pricing-heading" v-reveal="80">Invest In <span>Yourself</span></h2>
+      <p class="pricing-sub" v-reveal="160">Online coaching or in person with Zac</p>
 
       <!-- Cards -->
-      <div class="pricing-grid">
+      <div class="pricing-grid" v-reveal="200">
 
         <!-- Tier 1: Foundation (free) -->
         <div class="pricing-card">
@@ -139,7 +139,7 @@
 
       <!-- In-Person Training -->
       <div class="inperson">
-        <div class="inperson__intro">
+        <div class="inperson__intro" v-reveal>
           <span class="inperson__label">In-Person Training</span>
           <h3 class="inperson__heading">Train With Zac, <span>In Person</span></h3>
           <p class="inperson__body">
@@ -147,7 +147,7 @@
           </p>
         </div>
 
-        <div class="inperson-grid">
+        <div class="inperson-grid" v-reveal="120">
           <div
             v-for="plan in inPersonPlans"
             :key="plan.name"

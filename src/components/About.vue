@@ -7,7 +7,7 @@
     <div class="container about-inner">
 
       <!-- Section label -->
-      <div class="section-tag">
+      <div class="section-tag" v-reveal>
         <div class="section-tag__bar"></div>
         <span class="section-tag__label">About</span>
       </div>
@@ -16,16 +16,16 @@
       <div class="about-grid">
 
         <!-- Photo column -->
-        <div class="about-photo-wrap">
+        <div class="about-photo-wrap" v-reveal>
           <div class="about-photo-frame">
-            <img src="../assets/images/Zac-profile-image.jpeg" alt="Zac Box Personal Trainer" class="about-photo__img" />
+            <img src="../assets/images/Zac-profile-image.jpeg" alt="Zac Box Personal Trainer" class="about-photo__img" loading="lazy" decoding="async" />
           </div>
           <!-- Offset red bracket accent behind the photo -->
           <div class="about-photo-accent" aria-hidden="true"></div>
         </div>
 
         <!-- Content column -->
-        <div class="about-content">
+        <div class="about-content" v-reveal="150">
           <h2 class="about-heading">Meet <span>Zac</span></h2>
 
           <p class="about-body">

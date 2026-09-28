@@ -3,17 +3,17 @@
     <div class="container">
 
       <!-- Section label -->
-      <div class="section-tag">
+      <div class="section-tag" v-reveal>
         <div class="section-tag__bar"></div>
         <span class="section-tag__label">What's On</span>
       </div>
 
       <!-- Heading -->
-      <h2 class="whatson-heading">What's <span>On</span></h2>
-      <p class="whatson-sub">Sign up on the Total Fitness app</p>
+      <h2 class="whatson-heading" v-reveal="80">What's <span>On</span></h2>
+      <p class="whatson-sub" v-reveal="160">Sign up on the Total Fitness app</p>
 
       <!-- Class cards -->
-      <div class="class-grid">
+      <div class="class-grid" v-reveal="200">
 
         <!-- Class cards -->
         <div v-for="cls in classes" :key="cls.name" class="class-card">

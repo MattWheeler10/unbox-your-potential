@@ -7,17 +7,17 @@
     <div class="container reviews-inner">
 
       <!-- Section label -->
-      <div class="section-tag">
+      <div class="section-tag" v-reveal>
         <div class="section-tag__bar"></div>
         <span class="section-tag__label">Reviews</span>
       </div>
 
       <!-- Heading -->
-      <h2 class="reviews-heading">Real People. <span>Real Results.</span></h2>
-      <p class="reviews-sub">Don't just take my word for it</p>
+      <h2 class="reviews-heading" v-reveal="80">Real People. <span>Real Results.</span></h2>
+      <p class="reviews-sub" v-reveal="160">Don't just take my word for it</p>
 
       <!-- Rating summary -->
-      <div class="reviews-rating">
+      <div class="reviews-rating" v-reveal="200">
         <div class="reviews-rating__stars" aria-hidden="true">
           <svg v-for="n in 5" :key="n" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2l2.9 6.94 7.1.62-5.4 4.7 1.64 7.24L12 17.6l-6.24 3.9 1.64-7.24-5.4-4.7 7.1-.62L12 2z"/>
@@ -27,6 +27,7 @@
       </div>
 
       <!-- Review cards -->
+      <div v-reveal="240">
       <div class="reviews-grid" :class="{ 'reviews-grid--even': !expanded.includes(true) }">
 
         <!-- Card 1: Anonymous client -->
@@ -116,6 +117,7 @@
           </div>
         </div>
 
+      </div>
       </div>
     </div>
   </section>
