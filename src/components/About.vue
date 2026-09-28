@@ -170,7 +170,7 @@ onUnmounted(() => {
 .about {
   position: relative;
   padding: 5.5rem 0;
-  background: var(--color-bg);
+  background: var(--color-bg-soft);
   overflow: hidden;
 }
 
@@ -241,7 +241,7 @@ onUnmounted(() => {
 .about-photo-frame {
   position: relative;
   aspect-ratio: 3 / 4;
-  background: var(--color-bg-soft);
+  background: var(--color-bg);
   border: 1px solid rgba(255, 255, 255, 0.07);
   overflow: hidden;
   border-radius: 2px;
@@ -428,7 +428,7 @@ onUnmounted(() => {
 
 /* Front */
 .cert-card__front {
-  background: var(--color-bg-soft);
+  background: var(--color-bg);
   border: 1px solid rgba(255, 255, 255, 0.07);
   display: flex;
   flex-direction: column;

@@ -13,6 +13,7 @@
           <li><a href="#" class="nav-link" @click="closeMenu">Home</a></li>
           <li><a href="#about" class="nav-link" @click="closeMenu">About</a></li>
           <li><a href="#whats-on" class="nav-link" @click="closeMenu">What's On</a></li>
+          <li><a href="#reviews" class="nav-link" @click="closeMenu">Reviews</a></li>
           <li><a href="#pricing" class="nav-link" @click="closeMenu">Pricing</a></li>
           <li><a href="#contact" class="nav-link" @click="closeMenu">Contact</a></li>
         </ul>
@@ -57,8 +58,10 @@
 
         <!-- Main title -->
         <h1 class="hero-title">
-          <span class="hero-title__word">Unbox</span>
-          <span class="hero-title__word hero-title__word--red">Your</span>
+          <span class="hero-title__line">
+            <span class="hero-title__word">Unbox</span>
+            <span class="hero-title__word hero-title__word--red">Your</span>
+          </span>
           <span class="hero-title__word">Potential</span>
         </h1>
 
@@ -321,8 +324,22 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   margin-bottom: 1.75rem;
 }
 
+.hero-title__line {
+  display: flex;
+  justify-content: center;
+  gap: 0.25em;
+}
+
 .hero-title__word {
   color: var(--color-text);
+}
+
+/* Stack back to three lines on mobile */
+@media (max-width: 768px) {
+  .hero-title__line {
+    flex-direction: column;
+    gap: 0;
+  }
 }
 
 .hero-title__word--red {

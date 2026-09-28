@@ -5,6 +5,7 @@
   <main>
     <About />
     <WhatsOn />
+    <Reviews />
     <Pricing />
     <Contact />
   </main>
@@ -19,6 +20,7 @@ import Header from './components/Header.vue'
 import About from './components/About.vue'
 import Pricing from './components/Pricing.vue'
 import WhatsOn from './components/WhatsOn.vue'
+import Reviews from './components/Reviews.vue'
 import Contact from './components/Contact.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import LegalModal from './components/LegalModal.vue'

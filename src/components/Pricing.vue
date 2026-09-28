@@ -10,7 +10,7 @@
 
       <!-- Heading -->
       <h2 class="pricing-heading">Invest In <span>Yourself</span></h2>
-      <p class="pricing-sub">One package. Three ways to commit.</p>
+      <p class="pricing-sub">Online coaching or in person with Zac</p>
 
       <!-- Cards -->
       <div class="pricing-grid">
@@ -137,52 +137,52 @@
 
       </div>
 
-      <!-- In-Person Banner -->
+      <!-- In-Person Training -->
       <div class="inperson">
-        <div class="inperson__left">
+        <div class="inperson__intro">
           <span class="inperson__label">In-Person Training</span>
-          <h3 class="inperson__heading">Something More <span>Personal?</span></h3>
+          <h3 class="inperson__heading">Train With Zac, <span>In Person</span></h3>
           <p class="inperson__body">
-            For those looking for a truly bespoke experience — tailored sessions, lifestyle coaching and hands-on guidance training with Zac directly. Pricing is discussed on an individual basis.
+            One-to-one sessions at Total Fitness, Wilmslow, with full online coaching included. Billed monthly by direct debit, in 4-week blocks.
           </p>
-          <div class="inperson__ctas">
-            <a href="mailto:zacboxpt@gmail.com" class="inperson__cta inperson__cta--primary">
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-              Email Zac
-            </a>
-            <a href="https://www.instagram.com/zacbox_pt/" target="_blank" rel="noopener noreferrer" class="inperson__cta inperson__cta--outline">
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-              DM on Instagram
-            </a>
-          </div>
         </div>
-        <div class="inperson__right">
-          <ul class="inperson__features">
-            <li>
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Fully bespoke programme design
-            </li>
-            <li>
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Lifestyle &amp; habit coaching
-            </li>
-            <li>
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              In-depth nutrition strategy
-            </li>
-            <li>
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Live technique &amp; form coaching
-            </li>
-            <li>
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Priority access &amp; flexible scheduling
-            </li>
-            <li>
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Pricing discussed on enquiry
-            </li>
-          </ul>
+
+        <div class="inperson-grid">
+          <div
+            v-for="plan in inPersonPlans"
+            :key="plan.name"
+            class="inperson-card"
+            :class="{ 'inperson-card--luxe': plan.luxe }"
+          >
+            <div class="inperson-card__head">
+              <span class="inperson-card__name">{{ plan.name }}</span>
+              <span class="inperson-card__freq">{{ plan.frequency }}</span>
+            </div>
+
+            <div class="inperson-card__price">
+              <span class="inperson-card__amount">{{ plan.price }}</span>
+              <span class="inperson-card__per">/ 4 weeks</span>
+            </div>
+            <span class="inperson-card__billing">Monthly direct debit</span>
+
+            <ul class="inperson-card__features">
+              <li v-for="feature in plan.features" :key="feature">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {{ feature }}
+              </li>
+            </ul>
+
+            <div class="inperson-card__ctas">
+              <!-- TODO: add Stripe payment links to inPersonPlans below -->
+              <a
+                :href="plan.stripeUrl || '#contact'"
+                :target="plan.stripeUrl ? '_blank' : null"
+                :rel="plan.stripeUrl ? 'noopener noreferrer' : null"
+                class="inperson-card__cta"
+              >Join Now</a>
+              <a href="#contact" class="inperson-card__chat">Chat first</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -191,6 +191,39 @@
 </template>
 
 <script setup>
+// Stripe links not set up yet — until stripeUrl is filled in, "Join Now" goes to the contact section
+const inPersonPlans = [
+  {
+    name: 'Signature',
+    frequency: '1 session weekly + online coaching',
+    price: '£200',
+    stripeUrl: '',
+    luxe: false,
+    features: [
+      '1 one-to-one session with Zac per week',
+      'Full online coaching package included',
+      'Live technique & form coaching',
+      'In-depth nutrition strategy',
+      'Lifestyle & habit coaching',
+      'Priority booking & flexible scheduling',
+    ],
+  },
+  {
+    name: 'Elite',
+    frequency: '2 sessions weekly + online coaching',
+    price: '£400',
+    stripeUrl: '',
+    luxe: true,
+    features: [
+      '2 one-to-one sessions with Zac per week',
+      'Full online coaching package included',
+      'Live technique & form coaching',
+      'In-depth nutrition strategy',
+      'Lifestyle & habit coaching',
+      'Priority booking & flexible scheduling',
+    ],
+  },
+]
 </script>
 
 <style scoped>
@@ -598,19 +631,18 @@
 }
 
 /* =============================================
-   IN-PERSON BANNER
+   IN-PERSON TRAINING
 ============================================= */
 .inperson {
-  margin-top: 2rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-  background: var(--color-bg-soft);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-left: 3px solid var(--color-red);
-  border-radius: 2px;
-  padding: 2.5rem 2.5rem;
+  margin-top: 5rem;
+  padding-top: 4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.inperson__intro {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 3rem;
 }
 
 .inperson__label {
@@ -621,15 +653,15 @@
   text-transform: uppercase;
   letter-spacing: 0.3em;
   color: var(--color-red);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.9rem;
 }
 
 .inperson__heading {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
   line-height: 0.95;
   color: var(--color-text);
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
 }
 
 .inperson__heading span {
@@ -638,92 +670,215 @@
 
 .inperson__body {
   font-family: var(--font-heading);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 300;
   line-height: 1.7;
+  letter-spacing: 0.03em;
   color: var(--color-text-muted);
-  margin-bottom: 1.75rem;
-  max-width: 42ch;
 }
 
-.inperson__ctas {
+/* Grid */
+.inperson-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 940px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+/* Card */
+.inperson-card {
+  position: relative;
   display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 2.75rem 2.5rem 2.25rem;
+  background: linear-gradient(180deg, #151515 0%, #0d0d0d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.inperson__cta {
-  display: inline-flex;
-  align-items: center;
+.inperson-card:hover {
+  border-color: rgba(192, 57, 43, 0.3);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  transform: translateY(-3px);
+}
+
+/* Luxury card */
+.inperson-card--luxe {
+  background:
+    radial-gradient(ellipse at top, rgba(192, 57, 43, 0.14) 0%, transparent 60%),
+    linear-gradient(180deg, #181010 0%, #0c0c0c 100%);
+  border-color: rgba(192, 57, 43, 0.5);
+  box-shadow: 0 0 0 1px rgba(192, 57, 43, 0.12), 0 24px 64px rgba(0, 0, 0, 0.6);
+}
+
+.inperson-card--luxe:hover {
+  border-color: rgba(192, 57, 43, 0.8);
+  box-shadow: 0 0 0 1px rgba(192, 57, 43, 0.25), 0 24px 64px rgba(192, 57, 43, 0.18);
+}
+
+.inperson-card--luxe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-red), transparent);
+}
+
+/* Head */
+.inperson-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.inperson-card__name {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: var(--color-text);
+}
+
+.inperson-card__freq {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-red);
+}
+
+/* Price */
+.inperson-card__price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
   gap: 0.5rem;
+  line-height: 1;
+}
+
+.inperson-card__amount {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  color: var(--color-text);
+  letter-spacing: 0.02em;
+}
+
+.inperson-card__per {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-text-muted);
+}
+
+.inperson-card__billing {
+  display: block;
+  text-align: center;
+  margin-top: 0.6rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-family: var(--font-heading);
+  font-size: 0.66rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted);
+}
+
+/* Features */
+.inperson-card__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.75rem 0 2rem;
+  flex: 1;
+}
+
+.inperson-card__features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.4;
+  color: rgba(240, 240, 240, 0.82);
+  letter-spacing: 0.03em;
+}
+
+.inperson-card__features li svg {
+  color: var(--color-red);
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+/* CTAs */
+.inperson-card__ctas {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.inperson-card__cta,
+.inperson-card__chat {
+  flex: 1;
+  text-align: center;
   font-family: var(--font-heading);
   font-size: 0.78rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-decoration: none;
-  padding: 0.75rem 1.25rem;
+  padding: 0.9rem 1rem;
   border-radius: 2px;
-  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
-.inperson__cta--primary {
+.inperson-card__cta {
   background: var(--color-red);
   color: #fff;
   border: 1px solid var(--color-red);
 }
 
-.inperson__cta--primary:hover {
+.inperson-card__cta:hover {
   background: var(--color-red-hover);
   border-color: var(--color-red-hover);
-  transform: translateY(-2px);
 }
 
-.inperson__cta--outline {
+.inperson-card__chat {
   background: transparent;
   color: var(--color-text-muted);
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.inperson__cta--outline:hover {
+.inperson-card__chat:hover {
   border-color: rgba(255, 255, 255, 0.35);
   color: var(--color-text);
-  transform: translateY(-2px);
-}
-
-.inperson__features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
-
-.inperson__features li {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  font-family: var(--font-heading);
-  font-size: 0.9rem;
-  font-weight: 300;
-  color: rgba(240, 240, 240, 0.75);
-  letter-spacing: 0.03em;
-}
-
-.inperson__features li svg {
-  color: var(--color-red);
-  flex-shrink: 0;
 }
 
 @media (max-width: 900px) {
   .inperson {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
-    padding: 2rem 1rem;
-    border-left: 3px solid var(--color-red);
+    margin-top: 3.5rem;
+    padding-top: 3rem;
   }
 
-  .inperson__body {
-    max-width: 100%;
+  .inperson-grid {
+    grid-template-columns: 1fr;
+    max-width: 540px;
+    gap: 2rem;
+  }
+
+  .inperson-card {
+    padding: 2.75rem 1.5rem 2rem;
   }
 }
 </style>
