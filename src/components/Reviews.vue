@@ -29,9 +29,13 @@
       <!-- Review cards -->
       <div v-reveal="240">
       <div class="reviews-grid" :class="{ 'reviews-grid--even': !expanded.includes(true) }">
-
-        <!-- Card 1: Anonymous client -->
-        <div class="review-card">
+        <div
+          v-for="(review, i) in reviews"
+          v-show="showAll || i < INITIAL_DESKTOP"
+          :key="review.name + i"
+          class="review-card"
+          :class="{ 'review-card--extra-mobile': !showAll && i >= INITIAL_MOBILE }"
+        >
           <span class="review-card__quote" aria-hidden="true">&ldquo;</span>
 
           <div class="review-card__stars" aria-hidden="true">
@@ -42,82 +46,30 @@
 
           <p
             class="review-card__body"
-            :class="{ 'review-card__body--clamped': !expanded[0] }"
-            :ref="el => setBodyRef(el, 0)"
+            :class="{ 'review-card__body--clamped': !expanded[i] }"
+            :ref="el => setBodyRef(el, i)"
           >
-            After an indulgent festive period and a tough start to 2025, I knew it was time to get back on track and hit the gym. I hadn't trained consistently since before university - four years of excuses like &ldquo;I don't have time&rdquo; or &ldquo;playing football is enough exercise.&rdquo; How wrong I was.
-            <br><br>
-            At the end of January, I reached out to Zac about my poor eating habits and hectic schedule. He put together a tailored plan that included swapping out unhealthy snacks, eating nutritious meals, and fitting in four gym sessions a week. The results are already showing, and I'm excited to see how much progress I can make before summer.
-            <br><br>
-            If you're looking to kick-start your fitness journey, I can't recommend Zac enough. He's been there every step of the way - offering advice on nutrition, training form, and even adjusting my plan to fit my gym's limited equipment. If you're serious about making a change, Zac is the man.
+            <template v-for="(para, p) in review.paragraphs" :key="p">
+              <template v-if="p > 0"><br><br></template>{{ para }}
+            </template>
           </p>
 
-          <button v-if="overflowing[0]" type="button" class="review-card__toggle" @click="toggle(0)">
-            {{ expanded[0] ? 'Show less' : 'Show more' }}
+          <button v-if="overflowing[i]" type="button" class="review-card__toggle" @click="toggle(i)">
+            {{ expanded[i] ? 'Show less' : 'Show more' }}
           </button>
 
           <div class="review-card__footer">
-            <span class="review-card__name">Verified Client</span>
+            <span class="review-card__name">{{ review.name }}</span>
           </div>
         </div>
-
-        <!-- Card 2: Fabio -->
-        <div class="review-card">
-          <span class="review-card__quote" aria-hidden="true">&ldquo;</span>
-
-          <div class="review-card__stars" aria-hidden="true">
-            <svg v-for="n in 5" :key="n" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l2.9 6.94 7.1.62-5.4 4.7 1.64 7.24L12 17.6l-6.24 3.9 1.64-7.24-5.4-4.7 7.1-.62L12 2z"/>
-            </svg>
-          </div>
-
-          <p
-            class="review-card__body"
-            :class="{ 'review-card__body--clamped': !expanded[1] }"
-            :ref="el => setBodyRef(el, 1)"
-          >
-            You really helped me bro. I was working 10+ hours a day and could never find the time for working out and eating my meals. I thought I wouldn't be able to gain weight.
-            <br><br>
-            But after a few weeks of working with you, you really helped me dial in the consistency. You made it effortless. So thank you Zac. I can't thank you enough.
-          </p>
-
-          <button v-if="overflowing[1]" type="button" class="review-card__toggle" @click="toggle(1)">
-            {{ expanded[1] ? 'Show less' : 'Show more' }}
-          </button>
-
-          <div class="review-card__footer">
-            <span class="review-card__name">Fabio</span>
-          </div>
-        </div>
-
-        <!-- Card 3: Anonymous client -->
-        <div class="review-card">
-          <span class="review-card__quote" aria-hidden="true">&ldquo;</span>
-
-          <div class="review-card__stars" aria-hidden="true">
-            <svg v-for="n in 5" :key="n" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2l2.9 6.94 7.1.62-5.4 4.7 1.64 7.24L12 17.6l-6.24 3.9 1.64-7.24-5.4-4.7 7.1-.62L12 2z"/>
-            </svg>
-          </div>
-
-          <p
-            class="review-card__body"
-            :class="{ 'review-card__body--clamped': !expanded[2] }"
-            :ref="el => setBodyRef(el, 2)"
-          >
-            Zac is a very knowledgeable and expert PT. I've been following his advice and strength training plan and I have noticed significant results already. I'm feeling stronger and fitter each session.
-          </p>
-
-          <button v-if="overflowing[2]" type="button" class="review-card__toggle" @click="toggle(2)">
-            {{ expanded[2] ? 'Show less' : 'Show more' }}
-          </button>
-
-          <div class="review-card__footer">
-            <span class="review-card__name">Verified Client</span>
-          </div>
-        </div>
-
       </div>
+      </div>
+
+      <!-- Show all -->
+      <div v-if="reviews.length > INITIAL_MOBILE" class="reviews-more" :class="{ 'reviews-more--mobile-only': reviews.length <= INITIAL_DESKTOP }">
+        <button type="button" class="reviews-more__btn" :aria-expanded="showAll.toString()" @click="toggleAll">
+          {{ showAll ? 'Show fewer reviews' : `Show all ${reviews.length} reviews` }}
+        </button>
       </div>
     </div>
   </section>
@@ -126,8 +78,80 @@
 <script setup>
 import { reactive, ref, onMounted, nextTick } from 'vue'
 
-const expanded = reactive([false, false, false])
-const overflowing = reactive([false, false, false])
+// Cards shown before "Show all" — fewer on mobile where cards stack
+const INITIAL_DESKTOP = 6
+const INITIAL_MOBILE = 3
+
+// Ordered to lead with short, results-focused reviews and a spread of
+// ages/backgrounds; longer stories sit further down
+const reviews = [
+  {
+    name: 'Natasha',
+    paragraphs: [
+      'Since starting PT with Zac, I’m much stronger and leaner. The results I’ve seen in three months are more than the past three years of gym-going. He’s knowledgeable, dedicated to getting the best out of his clients and I would highly recommend.',
+    ],
+  },
+  {
+    name: 'Kathy H',
+    paragraphs: [
+      'As a 58 year old, completely new to the gym world, I would have felt completely intimidated and out of my depth if it wasn’t for Zac. He listens to what I want to achieve, plans appropriate routines that I can build on, with him, or on my own, pushing me at an acceptable pace, and all delivered with a professional, personable and friendly approach. After 2 months I already feel stronger and fitter, which is fantastic. I would definitely recommend him as a personal trainer to anyone.',
+    ],
+  },
+  {
+    name: 'Ben',
+    paragraphs: [
+      'Zac has helped me make a huge amount of progress with both my fitness and confidence. He created a training plan to achieve my personal goals and because of that I’ve been able to build muscle, lose body fat and gain strength.',
+      'Zac is very knowledgeable and doesn’t just tell me what I need to do, he explains why I need to do it and the benefits each exercise has. He pushes me to achieve more than I think I can and the results so far have been better than I expected.',
+    ],
+  },
+  {
+    name: 'Tahera',
+    paragraphs: [
+      'I’ve really enjoyed my sessions with Zac and always look forward to training with him. He regularly gives me helpful feedback on my progress and tailors my programme as I improve and move forward. In just two months, I’ve already noticed great results, which is especially impressive for me in my late 40s. Zac is knowledgeable, supportive and motivating, and I’m really pleased with my progress so far!',
+    ],
+  },
+  {
+    name: 'Nick',
+    paragraphs: [
+      'After being very inconsistent with the gym for several years, I decided to ask Zac for some help locking in. We started using my company’s gym and Zac was able to create me a full plan using the limited equipment on offer.',
+      'I eventually moved into a larger gym, and he was able to alter the plan accordingly, changing some exercises to prevent tediousness whilst also making sure I hit the right muscle groups twice a week.',
+      'Zac has consistently stayed in touch with me for tips (both in and out of the gym), progress reports, and for if I had any feedback for him. We’d even sometimes train together which seriously pushed me to my limits.',
+      'Over the time spent training under Zac’s guidance, my physical and mental health have reached levels I didn’t regard as possible at some points, which has also allowed my confidence to increase significantly.',
+      'I can’t recommend Zac enough if you are looking for honest but efficient training advice.',
+    ],
+  },
+  {
+    name: 'Emily',
+    paragraphs: [
+      'I’ve been working with Zac for a few months now and the results have exceeded my expectations. He’s been great, helping me find my feet at the gym, he’s always upbeat, pushing me to do my best and sessions are always well constructed and fun.',
+    ],
+  },
+  {
+    name: 'Chris',
+    paragraphs: [
+      'After an indulgent festive period and a tough start to 2025, I knew it was time to get back on track and hit the gym. I hadn’t trained consistently since before university - four years of excuses like “I don’t have time” or “playing football is enough exercise.” How wrong I was.',
+      'At the end of January, I reached out to Zac about my poor eating habits and hectic schedule. He put together a tailored plan that included swapping out unhealthy snacks, eating nutritious meals, and fitting in four gym sessions a week. The results are already showing, and I’m excited to see how much progress I can make before summer.',
+      'If you’re looking to kick-start your fitness journey, I can’t recommend Zac enough. He’s been there every step of the way - offering advice on nutrition, training form, and even adjusting my plan to fit my gym’s limited equipment. If you’re serious about making a change, Zac is the man.',
+    ],
+  },
+  {
+    name: 'Fabio',
+    paragraphs: [
+      'You really helped me bro. I was working 10+ hours a day and could never find the time for working out and eating my meals. I thought I wouldn’t be able to gain weight.',
+      'But after a few weeks of working with you, you really helped me dial in the consistency. You made it effortless. So thank you Zac. I can’t thank you enough.',
+    ],
+  },
+  {
+    name: 'Nick',
+    paragraphs: [
+      'Zac is a very knowledgeable and expert PT. I’ve been following his advice and strength training plan and I have noticed significant results already. I’m feeling stronger and fitter each session.',
+    ],
+  },
+]
+
+const expanded = reactive(reviews.map(() => false))
+const overflowing = reactive(reviews.map(() => false))
+const showAll = ref(false)
 const bodyEls = []
 
 function setBodyRef(el, i) {
@@ -138,13 +162,24 @@ function toggle(i) {
   expanded[i] = !expanded[i]
 }
 
-onMounted(async () => {
-  await nextTick()
+// Only visible cards can be measured, so re-check whenever more are shown
+function measureOverflow() {
   bodyEls.forEach((el, i) => {
-    if (el && el.scrollHeight > el.clientHeight + 1) {
-      overflowing[i] = true
+    if (el && el.offsetParent !== null && !expanded[i]) {
+      overflowing[i] = el.scrollHeight > el.clientHeight + 1
     }
   })
+}
+
+async function toggleAll() {
+  showAll.value = !showAll.value
+  await nextTick()
+  measureOverflow()
+}
+
+onMounted(async () => {
+  await nextTick()
+  measureOverflow()
 })
 </script>
 
@@ -322,7 +357,8 @@ onMounted(async () => {
   flex: none;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
   overflow: hidden;
 }
 
@@ -364,8 +400,56 @@ onMounted(async () => {
 }
 
 /* =============================================
+   SHOW ALL
+============================================= */
+.reviews-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.reviews-more__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  padding: 0.9rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.reviews-more__btn:hover {
+  border-color: rgba(192, 57, 43, 0.6);
+  background: rgba(192, 57, 43, 0.08);
+}
+
+/* Only needed on mobile when desktop already shows every review */
+.reviews-more--mobile-only {
+  display: none;
+}
+
+/* =============================================
    RESPONSIVE
 ============================================= */
+@media (max-width: 900px) {
+  /* Stacked cards — show fewer before "Show all" */
+  .review-card--extra-mobile {
+    display: none;
+  }
+
+  .reviews-more--mobile-only {
+    display: flex;
+  }
+}
+
 @media (max-width: 900px) {
   .reviews-grid {
     grid-template-columns: 1fr;
