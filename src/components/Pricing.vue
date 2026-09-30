@@ -47,13 +47,17 @@
           <a href="#contact" class="pricing-cta pricing-cta--outline">Get Started Free</a>
         </div>
 
-        <!-- Tier 2: Personal Training Package -->
+        <!-- Tier 2: Online Coaching -->
         <div class="pricing-card pricing-card--featured">
-          <div class="pricing-card__badge">Full Package</div>
+          <div class="pricing-card__badge">Online Coaching</div>
 
           <div class="pricing-card__top">
-            <span class="pricing-tier">Personal Training</span>
-            <p class="pricing-tagline">Everything you need to transform — choose your commitment</p>
+            <span class="pricing-tier">Online Coaching</span>
+            <div class="pricing-amount">
+              <span class="pricing-amount__free">£80</span>
+              <span class="pricing-amount__per">/ month</span>
+            </div>
+            <p class="pricing-tagline">Your training plan with weekly check-ins — everything you need to transform</p>
           </div>
 
           <ul class="pricing-features">
@@ -87,51 +91,15 @@
             </li>
           </ul>
 
-          <!-- Payment options -->
-          <div class="pricing-options">
-
-            <div class="pricing-option">
-              <div class="pricing-option__info">
-                <span class="pricing-option__label">1 Month</span>
-                <span class="pricing-option__desc">Flexible, no commitment</span>
-              </div>
-              <div class="pricing-option__right">
-                <span class="pricing-option__price">£200<span class="pricing-option__mo">/mo</span></span>
-                <div class="pricing-option__buttons">
-                  <a href="https://buy.stripe.com/fZu6oI0bJal17Pt5Fs8EM03" target="_blank" rel="noopener noreferrer" class="pricing-option__cta">Buy Now</a>
-                  <a href="#contact" class="pricing-option__chat">Chat first</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="pricing-option">
-              <div class="pricing-option__info">
-                <span class="pricing-option__label">3 Months</span>
-                <span class="pricing-option__desc">Save £25/mo · £525 total</span>
-              </div>
-              <div class="pricing-option__right">
-                <span class="pricing-option__price">£175<span class="pricing-option__mo">/mo</span></span>
-                <div class="pricing-option__buttons">
-                  <a href="https://buy.stripe.com/9B600k2jRgJpc5J8RE8EM02" target="_blank" rel="noopener noreferrer" class="pricing-option__cta">Buy Now</a>
-                  <a href="#contact" class="pricing-option__chat">Chat first</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="pricing-option pricing-option--best">
-              <div class="pricing-option__info">
-                <span class="pricing-option__label">6 Months+</span>
-                <span class="pricing-option__desc">Best value · Save £50/mo</span>
-              </div>
-              <div class="pricing-option__right">
-                <span class="pricing-option__price">£150<span class="pricing-option__mo">/mo</span></span>
-                <div class="pricing-option__buttons">
-                  <a href="https://buy.stripe.com/00wcN65w32Sz4Dh7NA8EM01" target="_blank" rel="noopener noreferrer" class="pricing-option__cta">Buy Now</a>
-                  <a href="#contact" class="pricing-option__chat">Chat first</a>
-                </div>
-              </div>
-            </div>
-
+          <!-- TODO: add the £80/mo Stripe payment link — until then "Join Now" goes to the contact section -->
+          <div class="pricing-option__buttons">
+            <a
+              :href="onlineStripeUrl || '#contact'"
+              :target="onlineStripeUrl ? '_blank' : null"
+              :rel="onlineStripeUrl ? 'noopener noreferrer' : null"
+              class="pricing-option__cta"
+            >Join Now</a>
+            <a href="#contact" class="pricing-option__chat">Chat first</a>
           </div>
         </div>
 
@@ -140,7 +108,10 @@
       <!-- In-Person Training -->
       <div class="inperson">
         <div class="inperson__intro" v-reveal>
-          <span class="inperson__label">In-Person Training</span>
+          <div class="section-tag">
+            <div class="section-tag__bar"></div>
+            <span class="section-tag__label">In-Person Training</span>
+          </div>
           <h3 class="inperson__heading">Train With Zac, <span>In Person</span></h3>
           <p class="inperson__body">
             One-to-one sessions at Total Fitness, Wilmslow, with full online coaching included. Billed monthly by direct debit, in 4-week blocks.
@@ -191,6 +162,9 @@
 </template>
 
 <script setup>
+// Online coaching (£80/mo) Stripe link — fill in once created
+const onlineStripeUrl = ''
+
 // Stripe links not set up yet — until stripeUrl is filled in, "Join Now" goes to the contact section
 const inPersonPlans = [
   {
@@ -459,98 +433,34 @@ const inPersonPlans = [
 }
 
 /* =============================================
-   PAYMENT OPTIONS
+   CTAs (online coaching card)
 ============================================= */
-.pricing-options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding-top: 1.75rem;
-}
-
-.pricing-option {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.02);
-  transition: border-color 0.25s ease, background 0.25s ease;
-}
-
-
-/* Best value option */
-.pricing-option--best {
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-
-.pricing-option__info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.pricing-option__label {
+.pricing-amount__per {
   font-family: var(--font-heading);
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 300;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--color-text);
-}
-
-.pricing-option__desc {
-  font-family: var(--font-heading);
-  font-size: 0.7rem;
-  font-weight: 300;
   color: var(--color-text-muted);
-  letter-spacing: 0.06em;
-}
-
-.pricing-option__right {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
+  margin-left: 0.3rem;
 }
 
 .pricing-option__buttons {
   display: flex;
-  gap: 0.5rem;
-}
-
-.pricing-option__price {
-  font-family: var(--font-display);
-  font-size: 1.9rem;
-  color: var(--color-text);
-  letter-spacing: 0.02em;
-  line-height: 1;
-}
-
-.pricing-option__mo {
-  font-family: var(--font-heading);
-  font-size: 0.7rem;
-  font-weight: 300;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-left: 0.1rem;
+  gap: 0.6rem;
 }
 
 .pricing-option__cta,
 .pricing-option__chat {
+  flex: 1;
+  text-align: center;
   font-family: var(--font-heading);
   font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  padding: 0.5rem 0.9rem;
+  padding: 0.9rem 1rem;
   border-radius: 2px;
-  white-space: nowrap;
   text-decoration: none;
   transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
 }
@@ -595,36 +505,6 @@ const inPersonPlans = [
 }
 
 @media (max-width: 600px) {
-  .pricing-option {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.85rem;
-  }
-
-  .pricing-option__right {
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.6rem;
-  }
-
-  .pricing-option__price {
-    font-size: 1.6rem;
-  }
-
-  .pricing-option__buttons {
-    display: flex;
-    gap: 0.6rem;
-    width: 100%;
-  }
-
-  .pricing-option__cta,
-  .pricing-option__chat {
-    flex: 1;
-    text-align: center;
-    white-space: normal;
-  }
-
   .pricing {
     padding: 3.5rem 0;
   }
@@ -640,28 +520,15 @@ const inPersonPlans = [
 }
 
 .inperson__intro {
-  text-align: center;
-  max-width: 560px;
-  margin: 0 auto 3rem;
-}
-
-.inperson__label {
-  display: inline-block;
-  font-family: var(--font-heading);
-  font-size: 0.68rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  color: var(--color-red);
-  margin-bottom: 0.9rem;
+  margin-bottom: 4rem;
 }
 
 .inperson__heading {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 5vw, 3.6rem);
-  line-height: 0.95;
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 0.9;
   color: var(--color-text);
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .inperson__heading span {
@@ -669,6 +536,7 @@ const inPersonPlans = [
 }
 
 .inperson__body {
+  max-width: 640px;
   font-family: var(--font-heading);
   font-size: 0.9rem;
   font-weight: 300;
@@ -682,8 +550,6 @@ const inPersonPlans = [
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-  max-width: 940px;
-  margin: 0 auto;
   align-items: stretch;
 }
 
@@ -874,6 +740,7 @@ const inPersonPlans = [
   .inperson-grid {
     grid-template-columns: 1fr;
     max-width: 540px;
+    margin: 0 auto;
     gap: 2rem;
   }
 
